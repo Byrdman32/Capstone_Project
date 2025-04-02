@@ -1,21 +1,30 @@
-workflow:
+```markdown
+Development workflow:
 
-Setup:
-React does not start out with the node_modules folder, which contains all of its dependencies.
-    To install these dependencies, run "npm install" in the directory - this installs all the dependencies it finds in package.json
-    These dependencies are too large to include directly in the repository
-To set up the API token, get our API token from the Discord server, then put copy it to a file called api_token (no file handle)
+To set up the API token, get our API token from the Discord server, then copy it to a file `backend/backend_modules/tokens/api_token`.
 
-To run back-end server:
-npm run build
-    If this doesn't work, install any dependencies like "npm install axios"
-    Running this creates new static files in the build folder
-    You may also need to set up npm itself
-py backend.py
-    Running this starts the server and backend API, which serves the static files from the build folder
-Follow URL to open the app in a web browser
-    Refresh the page to re-render and update any content from the back-end (like the timer)
+## Open in full dev container view or as interactive terminal:
+### Dev container:
+- In VS Code: `Ctrl + Shift + P` -> Rebuild and open in dev container.
 
-To access exoplanet API:
-Run main.py
-    The # %% lines denote Jupytext cells, which allows running like a Jupyter notebook or as a normal Python script
+### Interactive terminal:
+- `./enter_dev_container.sh` (Unix) or `./enter_dev_container.bat` (Windows):
+    - This builds and enters the container through an interactive terminal, while forwarding the ports needed by the application.
+    - Upon leaving the terminal, this automatically deletes the container.
+
+This dev container should automatically install all front-end and back-end dependencies and provide a standard development environment.
+
+(Once in full dev container view or interactive terminal)
+#### Building front-end:
+1. Navigate to the `frontend` directory.
+2. Run `npm install`:
+    - Updates front-end dependencies. This is run automatically upon entering the container but needs to be re-run if dependencies change mid-session.
+3. Run `npm run build`:
+    - The web page only works as intended if the front-end has been built since the last changes.
+
+#### Executing back-end:
+1. Navigate to the `backend` directory.
+2. Run `python3 main.py`:
+    - Serves the built web page and interfaces with APIs.
+Alternatively, run `./start_server.sh` to automate the build/execute process.
+```

@@ -1,8 +1,9 @@
 from flask import Flask, send_from_directory, jsonify
-from modules import exoplanets
+from backend_modules import exoplanets
 import os
 
-parent_directory_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+parent_directory_path = os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))
 app = Flask(
     __name__, static_folder=f"{parent_directory_path}/frontend/build"
 )  # Serve static files from frontend/build
@@ -26,4 +27,4 @@ def get_message():
 
 
 if __name__ == "__main__":
-    app.run(port=9000)
+    app.run(host="0.0.0.0", port=9000)
