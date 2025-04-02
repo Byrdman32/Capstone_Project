@@ -1,11 +1,13 @@
 from flask import Flask, send_from_directory, jsonify
-import time
+from modules import exoplanets
 import os
 
+parent_directory_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 app = Flask(
-    __name__, static_folder="build"
-)  # Only difference from React is the folder we look for the static files in
-# Only very minimal back-end changes are required to replace the front-end
+    __name__, static_folder=f"{parent_directory_path}/frontend/build"
+)  # Serve static files from frontend/build
+
+exoplanet_df = exoplanets.get_exoplanet_data()
 
 
 @app.route("/", defaults={"path": ""})
@@ -20,8 +22,7 @@ def serve(path):
 @app.route("/api/message")
 def get_message():
     print("/api/message invoked")
-    timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.localtime())
-    return jsonify(message=f"Hello World from the Python backend at {timestamp}")
+    return jsonify(message=f"First exoplanet: {str(exoplanet_df.iloc[0].to_dict())}")
 
 
 if __name__ == "__main__":
