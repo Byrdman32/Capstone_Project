@@ -22,6 +22,9 @@ def refresh_exoplanet_data() -> None:
     response = rq.get(url, headers={"Authorization": f"Bearer {api_token}"})
 
     if response.status_code == 200:
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(cached_api_results_path), exist_ok=True)
+
         with open(cached_api_results_path, "w") as file:
             file.write(response.text)
     else:
