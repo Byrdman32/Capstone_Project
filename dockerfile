@@ -17,7 +17,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
 
 # Install front-end dependencies with npm
 WORKDIR /workspace/frontend
-COPY frontend/package.json frontend/package-lock.json ./
+COPY frontend/package.json ./
 RUN npm install
 WORKDIR /workspace
 
