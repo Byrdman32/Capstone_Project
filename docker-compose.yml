@@ -31,10 +31,10 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - .:/workspace
-    stdin_open: true
-    tty: true
-    command: /bin/bash
+      - .:/workspace # Mount the current directory into the container
+    stdin_open: true # Keep the terminal open
+    tty: true # Allocate a pseudo-TTY
+    command: /bin/bash # Start the container in a terminal shell
     depends_on:
       postgres:
         condition: service_healthy

@@ -10,7 +10,6 @@ import os
 directory_path = os.path.dirname(
     os.path.abspath(__file__)
 )  # Avoids relative path issues when running alone or as a module
-print(f"Directory path: {directory_path}")
 cached_api_results_path = f"{directory_path}/data/exoplanets.csv"
 api_token_path = f"{directory_path}/tokens/api_token"
 
