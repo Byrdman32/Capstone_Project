@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   
   postgres:
@@ -26,7 +24,7 @@ services:
   devcontainer:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     container_name: exoplanet_dashboard
     ports:
       - "9000:9000"
