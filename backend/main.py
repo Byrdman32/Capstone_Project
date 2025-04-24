@@ -1,5 +1,6 @@
 from flask import Flask, send_from_directory, jsonify
 from backend_modules import exoplanets
+from constants import *
 import os
 
 parent_directory_path = os.path.dirname(
@@ -27,4 +28,4 @@ def get_message():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=9000)
+    app.run(host=API_ADDRESS, port=API_PORT, debug=True)
