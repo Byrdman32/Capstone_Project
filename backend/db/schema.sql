@@ -1,7 +1,7 @@
 -- Filename: schema.sql
 
 -- TODO
--- 1. Add a constraint to stars table to check for valid spectral types.
+-- 1. Add a constraint to stars table to check for valid spectral types (this will probably involve some regex).
 -- 2. Cleanup the comments and ensure they are consistent across all tables.
 
 
