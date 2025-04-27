@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-# Install Node.js and npm package manager
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+# Install latest version of Node.js and npm package manager
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
@@ -21,7 +21,8 @@ COPY frontend/package.json ./
 RUN npm install
 WORKDIR /workspace
 
-EXPOSE 9000
+EXPOSE 5173
+EXPOSE 4173
 
 # Set the working directory
 WORKDIR /workspace

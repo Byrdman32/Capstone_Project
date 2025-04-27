@@ -1,13 +1,14 @@
 from flask import Flask, send_from_directory, jsonify
+from flask_cors import CORS
 from backend_modules import exoplanets
 from constants import *
 import os
 
-parent_directory_path = os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__)))
+parent_directory_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 app = Flask(
     __name__, static_folder=f"{parent_directory_path}/frontend/build"
 )  # Serve static files from frontend/build
+CORS(app)
 
 exoplanet_df = exoplanets.get_exoplanet_data()
 
