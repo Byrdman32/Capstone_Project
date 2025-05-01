@@ -28,7 +28,6 @@ services:
     container_name: exoplanet_dashboard
     ports:
       - "5173:5173" # Forward port 5173
-      - "4173:4173" # Forward port 4173
     volumes:
       - .:/workspace # Mount the current directory into the container
     stdin_open: true # Keep the terminal open
