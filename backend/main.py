@@ -1,12 +1,17 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from backend_modules import exoplanets
+from blueprints.systems import systems_bp
 from constants import *
 
 app = Flask(__name__)
 CORS(app)
 
 exoplanet_df = exoplanets.get_exoplanet_data()
+
+app.register_blueprint(systems_bp, url_prefix="/api/systems")
+app.register_blueprint(planets_bp, url_prefix="/api/planets")
+app.register_blueprint(stars_bp, url_prefix="/api/stars")
 
 @app.route("/api/message")
 def get_message():
