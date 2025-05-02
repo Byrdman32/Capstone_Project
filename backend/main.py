@@ -1,3 +1,4 @@
+'''
 from flask import Flask, send_from_directory, jsonify
 from backend_modules import exoplanets
 from blueprints.systems import systems_bp
@@ -33,3 +34,12 @@ def get_message():
 
 if __name__ == "__main__":
     app.run(host=API_ADDRESS, port=API_PORT, debug=True)
+'''
+
+from backend import create_app
+from backend.constants import API_ADDRESS, API_PORT
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True, host=API_ADDRESS, port=API_PORT)

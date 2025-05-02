@@ -7,3 +7,11 @@ API_ADDRESS = '0.0.0.0'
 # MAKE SURE THAT IF YOU CHANGE THIS PORT THAT THE PORT IS FORWARDED IN DOCKER
 # Check docker-compose.yml to see this.
 API_PORT = 9000
+
+DB_CONFIG = {
+    'DB_HOST': 'postgres',
+    'DB_PORT': 5432,
+    'DB_NAME': 'mydatabase',
+    'DB_USER': 'testuser',
+    'DB_PASSWORD': 'testpassword',
+}
