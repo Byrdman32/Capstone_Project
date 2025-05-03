@@ -4,7 +4,6 @@ from backend.db import get_db
 planets_bp = Blueprint('planets', __name__)
 
 # Route 1: GET /api/planets/
-# Route 1: GET /api/planets/
 @planets_bp.route('/', methods=['GET'])
 def get_all_planets():
     """
