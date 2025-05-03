@@ -16,6 +16,8 @@ def get_all_planets():
         200: JSON list of planet objects.
         500: {"error": "<error message>"} on failure.
     """
+
+    # Get a connection and cursor from the connection pool
     conn = get_db()
     cur = conn.cursor()
     try:
@@ -23,8 +25,14 @@ def get_all_planets():
         cur.execute("SELECT * FROM planets;")
         rows = cur.fetchall()
 
-        # Build a list of dictionaries from rows
+        # If no rows are returned, return an empty list
+        if not rows:
+            return jsonify([]), 200  # returning empty list is fine
+        
+        # Get the column names from the cursor description
         columns = [desc[0] for desc in cur.description]
+
+        # Convert the rows to a list of dictionaries and return as JSON
         result = [dict(zip(columns, row)) for row in rows]
         return jsonify(result)
     except Exception as e:
@@ -46,8 +54,11 @@ def get_planet_by_id(id):
         404: {"error": "Planet not found"} if no match.
         500: {"error": "<error message>"} on failure.
     """
+    
+    # Get a connection and cursor from the connection pool
     conn = get_db()
     cur = conn.cursor()
+
     try:
         # Look up the planet by ID
         cur.execute("SELECT * FROM planets WHERE id = %s;", (id,))
@@ -59,6 +70,8 @@ def get_planet_by_id(id):
 
         # Format the row as a dictionary
         columns = [desc[0] for desc in cur.description]
+
+        # Convert the row to a dictionary and return as JSON
         result = dict(zip(columns, row))
         return jsonify(result)
     except Exception as e:
