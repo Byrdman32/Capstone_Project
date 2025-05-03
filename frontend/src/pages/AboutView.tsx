@@ -1,4 +1,4 @@
-import BackendCall from "../util/backend";
+import { BackendCall } from "../util/backend";
 
 export function AboutView() {
     return (

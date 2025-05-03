@@ -6,7 +6,7 @@ interface MessageResponse {
     };
 }
 
-function BackendCall() {
+export function BackendCall() {
     const [message, setMessage] = useState<string>(''); // TypeScript enforces the type of the state variable
 
     useEffect(() => {
@@ -27,4 +27,6 @@ function BackendCall() {
     );
 }
 
-export default BackendCall;
+export function PlanetSearchCall(searchQuery: string) {
+    console.log("Making backend API call with search query:", searchQuery);
+}
