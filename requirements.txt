@@ -4,3 +4,5 @@ flask
 modules
 psycopg2-binary
 dotenv
+flask_cors
+modules
