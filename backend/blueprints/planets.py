@@ -1,5 +1,7 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
+from backend.backend_modules.parser import valid_expression
 from backend.db import get_db
+import json
 
 planets_bp = Blueprint('planets', __name__)
 
@@ -123,6 +125,35 @@ def get_stars_from_planet_id(id):
         cur.close()
 
 
-@planets_bp.route('/search', methods=['GET'])
-def get_stars_by_search():
-    return jsonify({"error": "Not implemented"}), 501
+@planets_bp.route('/search', methods=['POST'])
+def get_planets_by_search():
+
+    st = request.json['request_string']
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    if not valid_expression(st):
+        return jsonify({"error": "Invalid expression"}), 400
+
+    try:
+        # Execute the SQL query to get stars that orbit the given planet
+        cur.execute(f"SELECT * FROM planets WHERE {st};")
+
+        # Fetch all rows from the executed query
+        rows = cur.fetchall()
+
+        # If no rows are returned, return a 404 error
+        if not rows:
+            return jsonify([]), 200  # returning empty list is fine
+
+        # Get the column names from the cursor description
+        columns = [desc[0] for desc in cur.description]
+
+        # Convert the rows to a list of dictionaries and return as JSON
+        result = [dict(zip(columns, row)) for row in rows]
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cur.close()
