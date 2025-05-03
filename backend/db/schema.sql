@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS stars (
     -- TABLE CONSTRAINTS --
     CONSTRAINT star_name_unique UNIQUE (star_name),
     CONSTRAINT expected_domain_check CHECK (
-        mass > 0 AND radius > 0 AND apparent_magnitude > 0 AND age_years > 0
+        mass > 0 AND radius > 0 AND age_years > 0
     )
     ----------- ADD CONSTRAINT TO CHECK THE SPECTRAL TYPE -------------
 );
@@ -105,3 +105,69 @@ CREATE TABLE IF NOT EXISTS planet_orbits (
     FOREIGN KEY (planet_id) REFERENCES planets(id) ON DELETE CASCADE,
     FOREIGN KEY (star_id) REFERENCES stars(id) ON DELETE CASCADE
 );
+
+----------------- FUNCTIONS -----------------
+--
+-- We are going to put more functions in the schema, currently this is
+-- Unused but we will add more functions in the future.
+CREATE OR REPLACE FUNCTION get_planets_by_star_id(p_star_id INT)
+RETURNS TABLE (
+    planet_id INT,
+    planet_name VARCHAR,
+    mass FLOAT,
+    radius FLOAT,
+    orbital_period FLOAT,
+    semi_major_axis FLOAT,
+    eccentricity FLOAT,
+    system_id INT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        p.id,
+        p.planet_name,
+        p.mass,
+        p.radius,
+        p.orbital_period,
+        p.semi_major_axis,
+        p.eccentricity,
+        p.system_id
+    FROM planets p
+    JOIN planet_orbits po ON po.planet_id = p.id
+    WHERE po.star_id = p_star_id;
+END;
+$$ LANGUAGE plpgsql;
+
+INSERT INTO systems (system_name, distance_ly)
+VALUES 
+('Vega', 25.05),
+('Sirius', 8.611),
+('Alpha_Centauri', 4.367);
+
+
+INSERT INTO stars (star_name, mass, radius, apparent_magnitude, spectral_type, age_years, system_id)
+VALUES 
+('Vega', 2.1, 2.3, 0.03, 'A0V', 455000000, 1),
+('Sirius_A', 2.0, 1.7, -1.46, 'A1V', 200000000, 2),
+('Sirius_B', 1.0, 0.9, 8.44, 'DA2', 120000000, 2),
+('Alpha_Centauri_A', 1.1, 1.2, 0.01, 'G2V', 5000000000, 3),
+('Alpha_Centauri_B', 0.9, 0.8, 0.2, 'K1V', 5000000000, 3),
+('Proxima_Centauri', 0.12, 0.14, 15.5, 'M5.5Ve', 5000000000, 3);
+
+
+INSERT INTO planets (planet_name, mass, radius, orbital_period, semi_major_axis, eccentricity, system_id)
+VALUES 
+('Vega_b', 0.5, 1.2, 0.5, 0.1, 0, 1),
+('Sirius_A_b', 0.8, 1.5, 1.0, 0.2, 0, 2),
+('Proxima_Centauri_b', 0.3, 1.1, 0.2, 0.05, 0, 3),
+('Proxima_Centauri_c', 0.4, 1.3, 0.3, 0.07, 0, 3),
+('Proxima_Centauri_d', 0.2, 1.0, 0.4, 0.08, 0, 3);
+
+
+INSERT INTO planet_orbits (planet_id, star_id)
+VALUES 
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 3),
+(5, 3);
