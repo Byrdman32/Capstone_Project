@@ -1,5 +1,5 @@
-cd frontend
-npm install
-npm run build
-cd ../backend
-python3 main.py
+# npm run preview starts a static server that serves the built/compiled files
+
+npm --prefix ./frontend install
+npm --prefix ./frontend run build
+npm --prefix ./frontend run preview
