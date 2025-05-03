@@ -22,6 +22,7 @@ RUN npm install
 WORKDIR /workspace
 
 EXPOSE 5173
+EXPOSE 9000
 
 # Set the working directory
 WORKDIR /workspace

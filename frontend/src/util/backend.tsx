@@ -10,9 +10,10 @@ function BackendCall() {
     const [message, setMessage] = useState<string>(''); // TypeScript enforces the type of the state variable
 
     useEffect(() => {
-        axios.get('/api/message') // Specify the expected response type
+        axios.get('/api/stars') // Specify the expected response type
             .then((response: MessageResponse) => {
-                setMessage(response.data.message); // Update the message state variable with the result
+                console.log(response); // Log the message to the console
+                setMessage(JSON.stringify(response.data)); // Update the message state variable with the result
             })
             .catch((error: unknown) => {
                 console.error(error);
