@@ -3,5 +3,5 @@ pandas
 flask
 modules
 psycopg2-binary
-dotenvdotenv
+dotenv
 flask_cors
