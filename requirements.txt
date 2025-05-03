@@ -1,4 +1,5 @@
 requests
 pandas
 flask
+flask_cors
 modules
