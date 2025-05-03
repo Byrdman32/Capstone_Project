@@ -3,3 +3,4 @@ pandas
 flask
 modules
 psycopg2-binary
+dotenv

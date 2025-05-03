@@ -18,6 +18,6 @@ DB_CONFIG = {
     'DB_HOST': 'postgres',
     'DB_PORT': 5432,
     'DB_NAME': 'mydatabase',
-    'DB_USER': os.getenv('DB_USER'),
+    'DB_USER': os.getenv('DB_USERNAME'),
     'DB_PASSWORD': os.getenv('DB_PASSWORD')
 }
