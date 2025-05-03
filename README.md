@@ -1,16 +1,16 @@
 # Development Workflow
 
-Follow the steps below to set up your environment, build the front-end, and run the back-end server with Swagger UI support.
+To get started, follow the steps below to set up the environment, build the front-end, and run the back-end.
 
 ---
 
-## API Token Setup (optional)
+## API Token Setup
 
 1. Retrieve the API token from the Discord server.
-2. Save the token to:
+2. Save the token to the following file path:
 
    ```
-   backend/backend_modules/tokens/api_token
+   ./backend/backend_modules/tokens/api_token
    ```
 
 ---
