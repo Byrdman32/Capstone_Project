@@ -1,30 +1,82 @@
-```markdown
-Development workflow:
+# Development Workflow
 
-To set up the API token, get our API token from the Discord server, then copy it to a file `backend/backend_modules/tokens/api_token`.
+To get started, follow the steps below to set up the environment, build the front-end, and run the back-end.
 
-## Open in full dev container view or as interactive terminal:
-### Dev container:
-- In VS Code: `Ctrl + Shift + P` -> Rebuild and open in dev container.
+---
 
-### Interactive terminal:
-- `./enter_dev_container.sh` (Unix) or `./enter_dev_container.bat` (Windows):
-    - This builds and enters the container through an interactive terminal, while forwarding the ports needed by the application.
-    - Upon leaving the terminal, this automatically deletes the container.
+## API Token Setup
 
-This dev container should automatically install all front-end and back-end dependencies and provide a standard development environment.
+1. Retrieve the API token from the Discord server.
+2. Save the token to the following file path:
 
-(Once in full dev container view or interactive terminal)
-#### Building front-end:
-1. Navigate to the `frontend` directory.
-2. Run `npm install`:
-    - Updates front-end dependencies. This is run automatically upon entering the container but needs to be re-run if dependencies change mid-session.
-3. Run `npm run build`:
-    - The web page only works as intended if the front-end has been built since the last changes.
+   ```
+   ./backend/backend_modules/tokens/api_token
+   ```
 
-#### Executing back-end:
-1. Navigate to the `backend` directory.
-2. Run `python3 main.py`:
-    - Serves the built web page and interfaces with APIs.
-Alternatively, run `./start_server.sh` to automate the build/execute process.
-```
+---
+
+## Using the Dev Container
+
+You can work either in the full Dev Container view (recommended in VS Code) or via an interactive terminal.
+
+### Option 1: Open in VS Code Dev Container
+
+* Press `Ctrl + Shift + P`
+* Select **Rebuild and Reopen in Container**
+
+### Option 2: Use an Interactive Terminal
+
+* Run the platform-specific script:
+
+  * Unix: `./enter_dev_container.sh`
+  * Windows: `./enter_dev_container.bat`
+* This will:
+
+  * Build and start the container with necessary port forwarding
+  * Automatically remove the container upon exit
+
+> The dev container automatically installs all front-end and back-end dependencies to ensure a consistent development environment.
+
+---
+
+## Building the Front-End
+
+1. Navigate to the `frontend` directory:
+
+   ```
+   cd frontend
+   ```
+2. Install dependencies (automatically done at container startup, but re-run if `package.json` changes):
+
+   ```
+   npm install
+   ```
+3. Build the front-end:
+
+   ```
+   npm run build
+   ```
+
+---
+
+## Running the Back-End
+
+1. Navigate to the `backend` directory:
+
+   ```
+   cd backend
+   ```
+2. Run the server manually:
+
+   ```
+   python3 main.py
+   ```
+
+   OR
+3. Use the automated script:
+
+   ```
+   ./start_server.sh
+   ```
+
+   This script builds the front-end and starts the back-end in one step.
