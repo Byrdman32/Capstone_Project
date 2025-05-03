@@ -1,18 +1,41 @@
-```markdown
-Development workflow:
+# Development Workflow
 
-To set up the API token, get our API token from the Discord server, then copy it to a file `backend/backend_modules/tokens/api_token`.
+To get started, follow the steps below to set up the environment, build the front-end, and run the back-end.
 
-## Open in full dev container view or as interactive terminal:
-### Dev container:
-- In VS Code: `Ctrl + Shift + P` -> Rebuild and open in dev container.
+---
 
-### Interactive terminal:
-- `./enter_dev_container.sh` (Unix) or `./enter_dev_container.bat` (Windows):
-    - This builds and enters the container through an interactive terminal, while forwarding the ports needed by the application.
-    - Upon leaving the terminal, this automatically deletes the container.
+## API Token Setup
 
-This dev container should automatically install all front-end and back-end dependencies and provide a standard development environment.
+1. Retrieve the API token from the Discord server.
+2. Save the token to the following file path:
+
+   ```
+   ./backend/backend_modules/tokens/api_token
+   ```
+
+---
+
+## Using the Dev Container
+
+You can work either in the full Dev Container view (recommended in VS Code) or via an interactive terminal.
+
+### Option 1: Open in VS Code Dev Container
+
+* Press `Ctrl + Shift + P`
+* Select **Rebuild and Reopen in Container**
+
+### Option 2: Use an Interactive Terminal
+
+* Run the platform-specific script:
+
+  * Unix: `./enter_dev_container.sh`
+  * Windows: `./enter_dev_container.bat`
+* This will:
+
+  * Build and start the container with necessary port forwarding
+  * Automatically remove the container upon exit
+
+> The dev container automatically installs all front-end and back-end dependencies to ensure a consistent development environment.
 
 (Once in full dev container view or interactive terminal)
 Run `./start_dev.sh` (live changes) or `./start_server.sh` (builds then serves) to start the front-end and back-end servers
