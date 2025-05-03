@@ -1,5 +1,5 @@
 services:
-  
+
   postgres:
     image: postgres:17
     container_name: postgres-db
@@ -28,6 +28,7 @@ services:
     container_name: exoplanet_dashboard
     ports:
       - "5173:5173" # Forward port 5173
+      - "9000:9000" # Forward port 9000
     volumes:
       - .:/workspace # Mount the current directory into the container
     stdin_open: true # Keep the terminal open

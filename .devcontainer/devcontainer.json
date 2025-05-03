@@ -4,6 +4,7 @@
 		"dockerfile": "../Dockerfile"
 	},
 	"forwardPorts": [
-		5173
+		5173,
+		9000
 	]
 }
