@@ -96,7 +96,7 @@ def get_stars_from_system_by_id(id):
         cur.close()
 
 @systems_bp.route('/search', methods=['POST'])
-def get_systems_by_search(id):
+def get_systems_by_search():
     st = request.json['request_string']
 
     conn = get_db()
