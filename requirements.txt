@@ -7,3 +7,4 @@ dotenv
 flask_cors
 lark
 google-generativeai
+flask_restx
