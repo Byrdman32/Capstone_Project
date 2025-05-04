@@ -4,7 +4,7 @@ Follow the steps below to set up your environment, build the front-end, and run 
 
 ---
 
-## API Token Setup
+## API Token Setup (optional)
 
 1. Retrieve the API token from the Discord server.
 2. Save the token to the following file path:
@@ -85,12 +85,53 @@ You can either use **VS Code Dev Container View** or run an **interactive termin
    * Install all dependencies
    * Automatically clean up on exit
 
-(Once in full dev container view or interactive terminal)
+---
 
-1. Navigate to the `root` directory of the project and run:
+## Building the Front-End
+
+1. Navigate to the front-end directory:
+
    ```
-   ./start_server.sh
+   cd frontend
    ```
+
+2. Install dependencies (re-run if `package.json` changes):
+
+   ```
+   npm install
+   ```
+
+3. Build the front-end:
+
+   ```
+   npm run build
+   ```
+
+---
+
+## Running the Back-End
+
+### Option 1: Manual Start
+
+1. Navigate to the back-end:
+
+   ```
+   cd backend
+   ```
+
+2. Run the server:
+
+   ```
+   python3 -m backend.main
+   ```
+
+### Option 2: Automated Script
+
+From the project root:
+
+```
+./start_server.sh
+```
 
 > This will build the front-end and start the back-end server in one step.
 
