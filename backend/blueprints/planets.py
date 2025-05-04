@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from backend.backend_modules.parser import valid_expression
+from backend.backend_modules.ai import generate_planet_description
 from backend.db import get_db
 import json
 
@@ -157,3 +158,42 @@ def get_planets_by_search():
         return jsonify({"error": str(e)}), 500
     finally:
         cur.close()
+
+@planets_bp.route('/<id>/ai_description', methods=['GET'])
+def get_planet_ai_description(id):
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    try:
+
+        cur.execute("""
+            SELECT * FROM planets WHERE id = %s
+        """, (id,))
+        row = cur.fetchone()
+
+        # If no rows are returned, throw an error
+        if not row:
+            return jsonify({"error": "Planet not found"}), 404
+        
+        # Format the row as a dictionary
+        columns = [desc[0] for desc in cur.description]
+
+        # Convert the row to a dictionary and return as JSON
+        result = dict(zip(columns, row))
+        jsonify(str(result))
+
+        print(str(result))
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cur.close()
+    
+    description = generate_planet_description(str(result))
+
+    return jsonify({"description": description}), 200
+
+    
+
+    

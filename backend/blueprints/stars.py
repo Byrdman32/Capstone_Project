@@ -138,3 +138,7 @@ def search_stars():
         return jsonify({"error": str(e)}), 500
     finally:
         cur.close()
+
+@stars_bp.route('/<id>/ai_description', methods=['POST'])
+def get_star_ai_description(id):
+    return jsonify({"error": "Not implemented"}), 501
