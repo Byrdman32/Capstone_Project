@@ -4,7 +4,7 @@ Follow the steps below to set up your environment, build the front-end, and run 
 
 ---
 
-## API Token Setup
+## API Token Setup (optional)
 
 1. Retrieve the API token from the Discord server.
 2. Save the token to:
@@ -77,7 +77,7 @@ You can either use **VS Code Dev Container View** or run an **interactive termin
 2. Run the server:
 
    ```
-   python3 main.py
+   python3 -m backend.main
    ```
 
 ### Option 2: Automated Script
