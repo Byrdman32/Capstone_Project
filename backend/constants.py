@@ -21,3 +21,5 @@ DB_CONFIG = {
     'DB_USER': os.getenv('DB_USERNAME'),
     'DB_PASSWORD': os.getenv('DB_PASSWORD')
 }
+
+AI_API_KEY = os.getenv('AI_API_KEY')

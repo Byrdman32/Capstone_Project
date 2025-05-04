@@ -5,3 +5,5 @@ modules
 psycopg2-binary
 dotenv
 flask_cors
+lark
+google-generativeai
