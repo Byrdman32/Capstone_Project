@@ -126,3 +126,8 @@ def get_systems_by_search():
         return jsonify({"error": str(e)}), 500
     finally:
         cur.close()
+
+
+@systems_bp.route('/<id>/ai_description', methods=['POST'])
+def get_system_ai_description(id):
+    return jsonify({"error": "Not implemented"}), 501
