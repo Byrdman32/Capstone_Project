@@ -9,9 +9,9 @@ To get started, follow the steps below to set up the environment, build the fron
 1. Retrieve the API token from the Discord server.
 2. Save the token to the following file path:
 
-   ```
-   ./backend/backend_modules/tokens/api_token
-   ```
+(Once in full dev container view or interactive terminal)
+Run `./start_dev.sh` (live changes) or `./start_server.sh` (builds then serves) to start the front-end and back-end servers
+```
 
 ---
 
