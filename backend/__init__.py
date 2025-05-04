@@ -1,7 +1,7 @@
 # backend/__init__.py
 from flask import Flask
 from backend.db import init_db_pool, close_db
-from backend.blueprints import planets_bp, stars_bp, systems_bp
+from backend.namespaces import planets_bp, stars_bp, systems_bp
 from backend.constants import *
 
 def create_app():
