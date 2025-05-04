@@ -54,6 +54,10 @@ export function SearchBar({ placeholder, onSearchResultChange }: SearchBarProps)
                 value={searchValue}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
+                sx={{
+                    backgroundColor: '#fff',
+                    borderRadius: '16px',
+                }}
                 slotProps={{
                     input: {
                         startAdornment: (
