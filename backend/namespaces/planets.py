@@ -193,7 +193,3 @@ def get_planet_ai_description(id):
     description = generate_planet_description(str(result))
 
     return jsonify({"description": description}), 200
-
-    
-
-    
