@@ -9,9 +9,9 @@ To get started, follow the steps below to set up the environment, build the fron
 1. Retrieve the API token from the Discord server.
 2. Save the token to the following file path:
 
-   ```
-   ./backend/backend_modules/tokens/api_token
-   ```
+(Once in full dev container view or interactive terminal)
+Run `./start_dev.sh` (live changes) or `./start_server.sh` (builds then serves) to start the front-end and back-end servers
+```
 
 ---
 
@@ -38,5 +38,14 @@ You can work either in the full Dev Container view (recommended in VS Code) or v
 > The dev container automatically installs all front-end and back-end dependencies to ensure a consistent development environment.
 
 (Once in full dev container view or interactive terminal)
-Run `./start_dev.sh` (live changes) or `./start_server.sh` (builds then serves) to start the front-end and back-end servers
-```
+
+1. Navigate to the `root` directory of the project and run:
+   ```
+   ./start_server.sh
+   ```
+   or
+   ```
+   ./start_dev.sh
+   ```
+
+   This script builds the front-end and starts the back-end in one step.
