@@ -21,6 +21,12 @@ ai_response_model = models['ai_response_model']
 # === API Endpoints ===
 @api.route('/')
 class StarList(Resource):
+    @api.doc(
+        params={
+            'limit': 'Maximum number of planets to return (optional)',
+            'offset': 'Number of planets to skip before starting to return results (optional)'
+        }
+    )
     @api.marshal_list_with(star_model, code=200, description='List of all stars', mask=None)
     @api.response(500, 'Internal Server Error')
     def get(self):
@@ -28,7 +34,24 @@ class StarList(Resource):
         conn = get_db()
         cur = conn.cursor()
         try:
-            cur.execute("SELECT * FROM stars;")
+            # Limit and offset are optional query parameters for pagination
+            # They can be used to control the number of results returned and the starting point
+            # For example: /stars?limit=10&offset=20
+            limit = request.args.get('limit', default=None, type=int)
+            offset = request.args.get('offset', default=0, type=int)
+
+            query = "SELECT * FROM stars"
+            params = []
+
+            if limit is not None:
+                query += " LIMIT %s"
+                params.append(limit)
+            if offset > 0:
+                query += " OFFSET %s"
+                params.append(offset)
+            query += ";"
+
+            cur.execute(query, params if params else None)
             rows = cur.fetchall()
             columns = [desc[0] for desc in cur.description]
             return [dict(zip(columns, row)) for row in rows], 200
@@ -83,6 +106,12 @@ class StarPlanets(Resource):
 
 @api.route('/search')
 class StarSearch(Resource):
+    @api.doc(
+        params={
+            'limit': 'Maximum number of planets to return (optional)',
+            'offset': 'Number of planets to skip before starting to return results (optional)'
+        }
+    )
     @api.expect(search_model)
     @api.marshal_list_with(star_model, code=200, description='Filtered list of stars returned', mask=None)
     @api.response(400, 'Invalid expression')
@@ -98,7 +127,24 @@ class StarSearch(Resource):
         conn = get_db()
         cur = conn.cursor()
         try:
-            cur.execute(f"SELECT * FROM stars WHERE {st};")
+            # Limit and offset are optional query parameters for pagination
+            # They can be used to control the number of results returned and the starting point
+            # For example: /stars/search?limit=10&offset=20
+            limit = request.args.get('limit', default=None, type=int)
+            offset = request.args.get('offset', default=0, type=int)
+            
+            query = f"SELECT * FROM stars WHERE {st}"
+            params = []
+
+            if limit is not None:
+                query += " LIMIT %s"
+                params.append(limit)
+            if offset > 0:
+                query += " OFFSET %s"
+                params.append(offset)
+            query += ";"
+
+            cur.execute(query, params if params else None)
             rows = cur.fetchall()
             columns = [desc[0] for desc in cur.description]
             return [dict(zip(columns, row)) for row in rows], 200

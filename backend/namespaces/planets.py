@@ -22,14 +22,37 @@ ai_response_model = models['ai_response_model']
 # === API Endpoints ===
 @api.route('/')
 class PlanetList(Resource):
+    @api.doc(
+        params={
+            'limit': 'Maximum number of planets to return',
+            'offset': 'Number of planets to skip before starting to return results'
+        }
+    )
     @api.marshal_list_with(planet_model, code=200, description='List of all planets', mask=None)
     @api.response(500, 'Internal Server Error')
     def get(self):
-        """Retrieve all planets in the database."""
+        """Retrieve all planets in the database. (supports limit and offset for pagination)"""
         conn = get_db()
         cur = conn.cursor()
         try:
-            cur.execute("SELECT * FROM planets;")
+            # Limit and offset are optional query parameters for pagination
+            # They can be used to control the number of results returned and the starting point
+            # For example: /planets?limit=10&offset=20
+            limit = request.args.get('limit', default=None, type=int)
+            offset = request.args.get('offset', default=0, type=int)
+
+            query = "SELECT * FROM planets"
+            params = []
+
+            if limit is not None:
+                query += " LIMIT %s"
+                params.append(limit)
+            if offset > 0:
+                query += " OFFSET %s"
+                params.append(offset)
+            query += ";"
+
+            cur.execute(query, params if params else None)
             rows = cur.fetchall()
             columns = [desc[0] for desc in cur.description]
             return [dict(zip(columns, row)) for row in rows]
@@ -84,12 +107,18 @@ class PlanetStars(Resource):
 
 @api.route('/search')
 class PlanetSearch(Resource):
+    @api.doc(
+        params={
+            'limit': 'Maximum number of planets to return (optional)',
+            'offset': 'Number of planets to skip before starting to return results (optional)'
+        }
+    )
     @api.expect(search_model)
     @api.marshal_list_with(planet_model, code=200, description='Filtered list of planets returned', mask=None)
     @api.response(400, 'Invalid expression')
     @api.response(500, 'Internal Server Error')
     def post(self):
-        """Search for planets using a validated SQL WHERE clause."""
+        """Search for planets using a validated SQL WHERE clause, with optional limit and offset."""
         body = request.get_json()
         st = body.get('request_string', '')
 
@@ -99,7 +128,24 @@ class PlanetSearch(Resource):
         conn = get_db()
         cur = conn.cursor()
         try:
-            cur.execute(f"SELECT * FROM planets WHERE {st};")
+            # Limit and offset are optional query parameters for pagination
+            # They can be used to control the number of results returned and the starting point
+            # For example: /planets/search?limit=10&offset=20
+            limit = request.args.get('limit', default=None, type=int)
+            offset = request.args.get('offset', default=0, type=int)
+            
+            query = f"SELECT * FROM planets WHERE {st}"
+            params = []
+
+            if limit is not None:
+                query += " LIMIT %s"
+                params.append(limit)
+            if offset > 0:
+                query += " OFFSET %s"
+                params.append(offset)
+            query += ";"
+
+            cur.execute(query, params if params else None)
             rows = cur.fetchall()
             columns = [desc[0] for desc in cur.description]
             return [dict(zip(columns, row)) for row in rows]
