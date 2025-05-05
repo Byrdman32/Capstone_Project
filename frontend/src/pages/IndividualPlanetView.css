@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    /* Ensure the container spans the full width of the screen */
+    box-sizing: border-box;
+    /* Include padding in the width calculation */
+}
+
+.planet-description {
+    flex: 1;
+    max-width: 50%;
+    /* Limits the width of the description */
+}
+
+.results-container {
+    flex: 1;
+    /* Adjusts to take equal space as planet-description */
+    max-width: 50%;
+    /* Ensures it stays on the right side */
+    margin-left: auto;
+    /* Pushes the results container to the far right */
+}
+
+.individual-planet-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    /* Add some spacing between the two sections */
+}

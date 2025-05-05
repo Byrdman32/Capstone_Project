@@ -4,20 +4,6 @@ import google.generativeai as genai
 genai.configure(api_key=AI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
-def encode_text(text: str) -> str:
-    """
-    Encodes the input text using the AI model.
-
-    Args:
-        text (str): The input text to be encoded.
-
-    Returns:
-        str: The encoded text.
-    """
-    response = model.encode_text(text)
-    return response.text
-
-
 def generate_response(prompt: str) -> str:
     """
     Generates a response from the AI model based on the provided prompt.
@@ -30,7 +16,6 @@ def generate_response(prompt: str) -> str:
     """
     response = model.generate_content(prompt)
     return response.text
-    
 
 def generate_planet_description(description: str) -> str:
     """
@@ -43,9 +28,8 @@ def generate_planet_description(description: str) -> str:
         str: The generated planet description.
     """
     prompt = f"""
-        Generate a detailed description of a planet based on the following information: {description}
+        Generate a detailed description of a planet based on the following information. Keep the description to a couple medium paragraphs, and don't use any unusual formatting. {description}
     """
-    prompt = encode_text(prompt)
     return generate_response(prompt)
 
 
@@ -59,6 +43,5 @@ def generate_star_description(description: str) -> str:
     Returns:
         str: The generated star description.
     """
-    prompt = f"Generate a detailed description of a star based on the following information: {description}"
+    prompt = f"Generate a detailed description of a star based on the following information. Keep the description to a couple medium paragraphs, and don't use any unusual formatting. {description}"
     return generate_response(prompt)
-

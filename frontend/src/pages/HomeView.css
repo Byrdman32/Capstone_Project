@@ -1,0 +1,19 @@
+.details-link {
+    padding-left: 20px;
+}
+
+.search-bar-container {
+    flex: 1;
+    /* Take up half the width */
+    max-width: 40%;
+    /* Ensure it doesn't exceed half the screen */
+}
+
+.home-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    /* Add some spacing between the two sections */
+}
