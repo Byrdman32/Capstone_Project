@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 interface SearchBarProps {
     placeholder: string;
@@ -22,6 +23,10 @@ export function SearchBar({ placeholder, onSearchResultChange, searchFunction }:
             setSearchResult(await searchFunction(searchValue)); // Update the state with the search result
         }
     }
+    const handleReset = async () => {
+        setSearchValue("");
+        setSearchResult(await searchFunction(""));
+    };
     useEffect(() => { // Computed property to watch search result and log when it changes
         if (searchResult) {
             if (searchResult.error) {
@@ -34,9 +39,7 @@ export function SearchBar({ placeholder, onSearchResultChange, searchFunction }:
                 if (onSearchResultChange) {
                     onSearchResultChange(searchResult); // Pass the search result to the parent component
                 }
-                console.log("No error");
             }
-            console.log("Search result:", searchResult); // Log the search result
         }
     }, [searchResult]); // Dependency array to trigger effect when searchResult changes
     useEffect(() => {
@@ -73,6 +76,14 @@ export function SearchBar({ placeholder, onSearchResultChange, searchFunction }:
                     },
                 }}
             />
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleReset}
+                style={{ marginTop: '8px', marginLeft: '8px' }}
+            >
+                Reset Search
+            </Button>
             {searchError && (
                 <Typography color="error" variant="body2" style={{ marginTop: '8px' }}>
                     {searchError}

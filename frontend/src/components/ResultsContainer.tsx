@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ResultsContainer.css";
+import Button from '@mui/material/Button';
 
 interface ResultsContainerProps {
     searchResult: Array<any>;
@@ -14,10 +15,12 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
     const totalPages = Math.ceil(searchResult.length / itemsPerPage);
 
     useEffect(() => { // Ensure current page is always valid
-        if (currentPage > totalPages) {
-            setCurrentPage(totalPages);
-        } else if (currentPage < 1) {
-            setCurrentPage(1);
+        if (currentPage < totalPages || currentPage > totalPages) {
+            if (currentPage > totalPages) {
+                setCurrentPage(totalPages);
+            } else {
+                setCurrentPage(1);
+            }
         }
     }, [totalPages, currentPage]);
 
@@ -59,7 +62,7 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
                                     ))}
                                 </ul>
                             </div>
-                            <a href={`/planet/2`}>View Details</a>
+                            <a href={`/planet/2`} className="details-link">View Details</a>
                         </li>
                     ))}
                 </ul>
@@ -69,23 +72,33 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
 
             {/* Pagination Controls */}
             <div className="pagination-controls">
-                <button
+                <Button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     className="pagination-prev-button"
+                    variant="contained"
+                    color="secondary"
+                    sx={{
+                        display: currentPage === 1 ? 'none' : 'inline-block',
+                    }}
                 >
                     Previous
-                </button>
+                </Button>
                 <span className="pagination-message">
                     Page {currentPage} of {totalPages}
                 </span>
-                <button
+                <Button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                     className="pagination-next-button"
+                    variant="contained"
+                    color="secondary"
+                    sx={{
+                        display: currentPage === totalPages ? 'none' : 'inline-block',
+                    }}
                 >
                     Next
-                </button>
+                </Button>
             </div>
         </div>
     );

@@ -45,14 +45,12 @@ body {
 
 .App-header {
   position: fixed;
-  /* Ensures it stays at the top */
   top: 0;
   left: 0;
   width: 100%;
-  /* Ensures it spans the full width */
   background-color: hwb(292 0% 94%);
   color: white;
-  padding: 10px 20px;
+  padding: 0px;
   text-align: center;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -102,7 +100,7 @@ body,
   text-align: center;
   padding: 20px;
   box-sizing: border-box;
-  margin-top: 200px;
+  margin-top: 180px;
 }
 
 html,
@@ -139,7 +137,6 @@ body,
   /* Optional: Adds rounded corners */
   margin: 0px;
   padding: 0px;
-  transform: translateY(-10px);
 }
 
 .result-item {
@@ -161,14 +158,14 @@ body,
 .search-bar-container {
   flex: 1;
   /* Take up half the width */
-  max-width: 50%;
+  max-width: 40%;
   /* Ensure it doesn't exceed half the screen */
 }
 
 .results-container {
-  flex: 1;
+  flex: 2;
   /* Take up the other half */
-  max-width: 50%;
+  max-width: 60%;
   /* Ensure it doesn't exceed half the screen */
   overflow-y: auto;
   /* Add scrolling if the results overflow */
