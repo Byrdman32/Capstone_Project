@@ -47,11 +47,21 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
                     {paginatedResults.map((planet: any, index: number) => (
                         <li key={index} className="result-item">
                             <div className="image-column">
-                                <img
-                                    src={`/exoplanets/${(planet.id % 20) + 1}.png`} // This needs to be manually updated for the number of exoplanet images
-                                    alt={`Hypothetical exoplanet image`}
-                                    className="planet-image"
-                                />
+                                {planet.radius && planet.radius > 10 && (
+                                    <img
+                                        src={`/exoplanets/large/${(planet.id % 14) + 1}.png`} // This needs to be manually updated for the number of large exoplanet images
+                                        alt={`Hypothetical exoplanet image`}
+                                        className="planet-image"
+                                    />
+                                )}
+                                {(!planet.radius || planet.radius <= 10) && (
+                                    <img
+                                        src={`/exoplanets/small/${(planet.id % 14) + 1}.png`} // This needs to be manually updated for the number of small exoplanet images
+                                        alt={`Hypothetical exoplanet image`}
+                                        className="planet-image"
+                                    />
+                                )}
+
                             </div>
                             <div className="details-column">
                                 <ul>
