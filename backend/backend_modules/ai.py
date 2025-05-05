@@ -4,7 +4,6 @@ import google.generativeai as genai
 genai.configure(api_key=AI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
-
 def generate_response(prompt: str) -> str:
     """
     Generates a response from the AI model based on the provided prompt.
@@ -17,7 +16,6 @@ def generate_response(prompt: str) -> str:
     """
     response = model.generate_content(prompt)
     return response.text
-
 
 def generate_planet_description(description: str) -> str:
     """
