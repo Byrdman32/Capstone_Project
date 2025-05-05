@@ -21,6 +21,12 @@ ai_response_model = models['ai_response_model']
 # === API Endpoints ===
 @api.route('/')
 class SystemList(Resource):
+    @api.doc(
+        params={
+            'limit': 'Maximum number of planets to return (optional)',
+            'offset': 'Number of planets to skip before starting to return results (optional)'
+        }
+    )
     @api.marshal_list_with(system_model, code=200, description='List of all systems', mask=None)
     @api.response(500, 'Internal Server Error')
     def get(self):
@@ -28,7 +34,24 @@ class SystemList(Resource):
         conn = get_db()
         cur = conn.cursor()
         try:
-            cur.execute("SELECT * FROM systems;")
+            # Limit and offset are optional query parameters for pagination
+            # They can be used to control the number of results returned and the starting point
+            # For example: /systems?limit=10&offset=20
+            limit = request.args.get('limit', default=None, type=int)
+            offset = request.args.get('offset', default=0, type=int)
+
+            query = "SELECT * FROM systems"
+            params = []
+
+            if limit is not None:
+                query += " LIMIT %s"
+                params.append(limit)
+            if offset > 0:
+                query += " OFFSET %s"
+                params.append(offset)
+            query += ";"
+
+            cur.execute(query, params if params else None)
             rows = cur.fetchall()
             columns = [desc[0] for desc in cur.description]
             return [dict(zip(columns, row)) for row in rows]
@@ -96,6 +119,12 @@ class SystemStars(Resource):
 
 @api.route('/search')
 class SystemSearch(Resource):
+    @api.doc(
+        params={
+            'limit': 'Maximum number of planets to return (optional)',
+            'offset': 'Number of planets to skip before starting to return results (optional)'
+        }
+    )
     @api.expect(search_model)
     @api.marshal_list_with(system_model, code=200, description='Filtered list of systems returned', mask=None)
     @api.response(400, 'Invalid expression')
@@ -111,7 +140,24 @@ class SystemSearch(Resource):
         conn = get_db()
         cur = conn.cursor()
         try:
-            cur.execute(f"SELECT * FROM systems WHERE {st};")
+            # Limit and offset are optional query parameters for pagination
+            # They can be used to control the number of results returned and the starting point
+            # For example: /systems/search?limit=10&offset=20
+            limit = request.args.get('limit', default=None, type=int)
+            offset = request.args.get('offset', default=0, type=int)
+            
+            query = f"SELECT * FROM systems WHERE {st}"
+            params = []
+
+            if limit is not None:
+                query += " LIMIT %s"
+                params.append(limit)
+            if offset > 0:
+                query += " OFFSET %s"
+                params.append(offset)
+            query += ";"
+
+            cur.execute(query, params if params else None)
             rows = cur.fetchall()
             columns = [desc[0] for desc in cur.description]
             return [dict(zip(columns, row)) for row in rows]
