@@ -5,8 +5,6 @@ interface Planet {
     [key: string]: any; // Allow additional dynamic properties
 }
 
-import './HomeView.css'; // Import the CSS file for styling
-
 export function HomeView() {
     const [searchResult, setSearchResult] = useState<Planet[]>([]);
     useEffect(() => {
@@ -20,7 +18,7 @@ export function HomeView() {
         <div>
             <div className="home-container">
                 <div className="search-bar-container">
-                    <p>Planet Search</p>
+                    <h2>Planet Search</h2>
                     <SearchBar placeholder="Search for a planet" onSearchResultChange={setSearchResult} />
                 </div>
                 <div className="results-container">
@@ -28,17 +26,26 @@ export function HomeView() {
                     {searchResult.length > 0 ? (
                         <ul>
                             {searchResult.map((planet: any, index: any) => (
-                                <li key={index}>
-                                    <ul>
-                                        {Object.entries(planet).map(([key, value]) => (
-                                            key !== "image" && ( // Exclude the image key from the list
-                                                <li key={key}>
-                                                    <strong>{key}:</strong> {String(value)}
-                                                </li>
-                                            )
-                                        ))}
-                                    </ul>
-                                    <a href={`/planet/${planet.id}`}>View Details</a>
+                                <li key={index} className="result-item">
+                                    <div className="image-column">
+                                        <img
+                                            src={`exoplanets/${(planet.id % 5) + 1}.png`}
+                                            alt={`Hypothetical exoplanet image`}
+                                            className="planet-image"
+                                        />
+                                    </div>
+                                    <div className="details-column">
+                                        <ul>
+                                            {Object.entries(planet).map(([key, value]) => (
+                                                key !== "image" && ( // Exclude the image key from the list
+                                                    <li key={key}>
+                                                        <strong>{key}:</strong> {String(value)}
+                                                    </li>
+                                                )
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <a href={`/planet/2`}>View Details</a>
                                 </li>
                             ))}
                         </ul>

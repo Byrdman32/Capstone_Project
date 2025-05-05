@@ -91,35 +91,91 @@ body,
 }
 
 .App {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: 100%;
-  background-image: url('./assets/background.png');
-  /* Adjust the path if needed */
+  background-image: url('/background.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  /* Makes the background stay fixed during scrolling */
   min-height: 100vh;
-  /* Ensures it covers the full viewport height */
   color: white;
-  /* Ensures text is readable on a dark background */
   text-align: center;
-  /* Centers text horizontally */
   padding: 20px;
-  /* Adds some spacing inside the container */
   box-sizing: border-box;
-  /* Includes padding in the element's total width/height */
   margin-top: 200px;
 }
 
 html,
 body,
 #root {
+  background-attachment: fixed;
   display: flex;
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.result-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.image-column {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.details-column {
+  flex: 2;
+}
+
+.planet-image {
+  width: 175px;
+  /* Set the desired width */
+  height: 175px;
+  /* Set the desired height */
+  /* Optional: Adds rounded corners */
+  margin: 0px;
+  padding: 0px;
+  transform: translateY(-10px);
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  /* Vertically align items in the center */
+  margin-bottom: 1rem;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  /* Add some spacing between the two sections */
+}
+
+.search-bar-container {
+  flex: 1;
+  /* Take up half the width */
+  max-width: 50%;
+  /* Ensure it doesn't exceed half the screen */
+}
+
+.results-container {
+  flex: 1;
+  /* Take up the other half */
+  max-width: 50%;
+  /* Ensure it doesn't exceed half the screen */
+  overflow-y: auto;
+  /* Add scrolling if the results overflow */
+}
+
+.details-column {
+  flex: 2;
+  text-align: left;
+  /* Ensures the text is left-aligned */
 }
