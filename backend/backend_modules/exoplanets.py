@@ -4,53 +4,6 @@
 from backend.constants import DB_CONFIG
 import psycopg2 as pg
 import requests as rq
-import pandas as pd
-import os
-
-# %%
-# Function definitions
-directory_path = os.path.dirname(
-    os.path.abspath(__file__)
-)  # Avoids relative path issues when running alone or as a module
-cached_api_results_path = f"{directory_path}/data/exoplanets.csv"
-api_token_path = f"{directory_path}/tokens/api_token"
-
-
-def refresh_exoplanet_data() -> None:
-    url = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&format=csv"
-    with open(api_token_path, "r") as token_file:
-        api_token = token_file.read().strip()
-
-    response = rq.get(url, headers={"Authorization": f"Bearer {api_token}"})
-
-    if response.status_code == 200:
-        # Ensure the directory exists
-        os.makedirs(os.path.dirname(cached_api_results_path), exist_ok=True)
-
-        with open(cached_api_results_path, "w") as file:
-            file.write(response.text)
-    else:
-        print(f"Error: {response.status_code}")
-
-
-def get_exoplanet_data(row_range: tuple = (0, 10)) -> pd.DataFrame:
-
-    url = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
-    query = f"""
-        SELECT
-            pl_name,
-            ROWNUM AS row_num,
-        FROM ps 
-        WHERE row_num <= {row_range[1]}
-    """
-
-    params = {
-        "query": query,
-        "format": "json",
-    }
-
-    response = rq.get(url, params=params)
-    print(response.text)
 
 def fetch_and_generate_sql_file(filename="api_results.sql", length=-1) -> None:
 
