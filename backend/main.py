@@ -18,7 +18,7 @@ if __name__ == '__main__':
     if args.refreshdb:
         nuke_database()
         build_database()
-        fetch_and_generate_sql_file()
+        fetch_and_generate_sql_file(length=5000)
         refresh_database("api_results.sql")
     else:
         app.run(debug=True, host=API_ADDRESS, port=API_PORT)
