@@ -20,30 +20,42 @@
 }
 
 .details-column {
+    flex: 2;
+    text-align: left;
     max-height: 150px;
     overflow-y: auto;
     padding-right: 20px;
     scrollbar-width: thin;
 }
 
-.details-column::-webkit-scrollbar {
+.individual-details-column {
+    flex: 2;
+    text-align: left;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 20px;
+    scrollbar-width: thin;
+}
+
+.details-column::-webkit-scrollbar,
+.individual-details-column::-webkit-scrollbar {
     width: 8px;
 }
 
-.details-column::-webkit-scrollbar-thumb {
+.details-column::-webkit-scrollbar-thumb,
+.individual-details-column::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 4px;
 }
 
-.details-column::-webkit-scrollbar-thumb:hover {
+.details-column::-webkit-scrollbar-thumb:hover,
+.individual-details-column::-webkit-scrollbar-thumb:hover {
     background-color: #555;
 }
 
-.results-container {
+.results-container,
+.individual-result-container {
     flex: 2;
-    /* Take up the other half */
-    max-width: 60%;
-    /* Ensure it doesn't exceed half the screen */
+    max-width: 40%;
     overflow-y: auto;
-    /* Add scrolling if the results overflow */
 }

@@ -9,12 +9,6 @@
     /* Ensure it doesn't exceed half the screen */
 }
 
-.details-column {
-    flex: 2;
-    text-align: left;
-    /* Ensures the text is left-aligned */
-}
-
 .home-container {
     display: flex;
     flex-direction: row;

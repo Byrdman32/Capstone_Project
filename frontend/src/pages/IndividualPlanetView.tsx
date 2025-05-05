@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { PlanetSearchCall } from '../util/backend';
-import { ResultsContainer } from '../components/ResultsContainer';
+import { IndividualResultContainer } from '../components/IndividualResultContainer';
 import PlanetAIDescription from '../components/PlanetAIDescription';
 
 import "./IndividualPlanetView.css";
@@ -33,11 +33,11 @@ export function IndividualPlanetView() {
                 <div className="planet-description">
                     <PlanetAIDescription planetId={id} />
                 </div>
-                <ResultsContainer
+                <IndividualResultContainer
                     searchResult={searchResult}
                     title=""
                     showDetailsLink={false}
-                ></ResultsContainer>
+                ></IndividualResultContainer>
             </div>
         </div>
     );

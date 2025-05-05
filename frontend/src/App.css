@@ -125,9 +125,6 @@ body,
   margin-right: 1rem;
 }
 
-.details-column {
-  flex: 2;
-}
 
 .planet-image {
   width: 175px;
