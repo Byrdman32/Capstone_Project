@@ -186,3 +186,4 @@ yarn-error.log*
 *.csv
 *package-lock.json
 api_token
+api_results.sql
