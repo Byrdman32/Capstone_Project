@@ -1,0 +1,19 @@
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination-prev-button {
+    text-align: left;
+}
+
+.pagination-message {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.pagination-next-button {
+    text-align: right;
+}

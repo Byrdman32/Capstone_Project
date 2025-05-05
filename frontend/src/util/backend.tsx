@@ -29,8 +29,26 @@ export function BackendCall() {
 
 export async function SystemSearchCall(searchQuery: string): Promise<any> {
     try {
+        if (!searchQuery) {
+            searchQuery = "ID > 0";
+        }
         const response = await axios.post(
             '/api/systems/search',
+            { request_string: searchQuery },
+        );
+        return response.data; // Properly return the response
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export async function PlanetSearchCall(searchQuery: string): Promise<any> {
+    try {
+        if (!searchQuery) {
+            searchQuery = "ID > 0";
+        }
+        const response = await axios.post(
+            '/api/planets/search',
             { request_string: searchQuery },
         );
         return response.data; // Properly return the response
