@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import "./ResultsContainer.css";
 import Button from '@mui/material/Button';
+
+import "./ResultsContainer.css";
 
 interface ResultsContainerProps {
     searchResult: Array<any>;
     title: string;
+    showDetailsLink: boolean;
 }
 
-export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult, title }) => {
+export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult, title, showDetailsLink }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
 
@@ -46,7 +48,7 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
                         <li key={index} className="result-item">
                             <div className="image-column">
                                 <img
-                                    src={`exoplanets/${(planet.id % 5) + 1}.png`}
+                                    src={`/exoplanets/${(planet.id % 5) + 1}.png`}
                                     alt={`Hypothetical exoplanet image`}
                                     className="planet-image"
                                 />
@@ -62,7 +64,9 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
                                     ))}
                                 </ul>
                             </div>
-                            <a href={`/planet/2`} className="details-link">View Details</a>
+                            {showDetailsLink && (
+                                <a href={`/planet/${planet.id}`} className="details-link">View Details</a>
+                            )}
                         </li>
                     ))}
                 </ul>
@@ -71,35 +75,37 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
             )}
 
             {/* Pagination Controls */}
-            <div className="pagination-controls">
-                <Button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="pagination-prev-button"
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                        display: currentPage === 1 ? 'none' : 'inline-block',
-                    }}
-                >
-                    Previous
-                </Button>
-                <span className="pagination-message">
-                    Page {currentPage} of {totalPages}
-                </span>
-                <Button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="pagination-next-button"
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                        display: currentPage === totalPages ? 'none' : 'inline-block',
-                    }}
-                >
-                    Next
-                </Button>
-            </div>
+            {totalPages > 1 && (
+                <div className="pagination-controls">
+                    <Button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="pagination-prev-button"
+                        variant="contained"
+                        color="secondary"
+                        sx={{
+                            display: currentPage === 1 ? 'none' : 'inline-block',
+                        }}
+                    >
+                        Previous
+                    </Button>
+                    <span className="pagination-message">
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <Button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="pagination-next-button"
+                        variant="contained"
+                        color="secondary"
+                        sx={{
+                            display: currentPage === totalPages ? 'none' : 'inline-block',
+                        }}
+                    >
+                        Next
+                    </Button>
+                </div>
+            )}
         </div>
     );
 };

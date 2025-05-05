@@ -38,6 +38,11 @@
     background-color: #555;
 }
 
-.details-link {
-    padding-left: 20px;
+.results-container {
+    flex: 2;
+    /* Take up the other half */
+    max-width: 60%;
+    /* Ensure it doesn't exceed half the screen */
+    overflow-y: auto;
+    /* Add scrolling if the results overflow */
 }

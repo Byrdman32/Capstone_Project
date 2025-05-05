@@ -3,6 +3,8 @@ import { SearchBar } from "../components/SearchBar";
 import { PlanetSearchCall } from '../util/backend';
 import { ResultsContainer } from '../components/ResultsContainer';
 
+import "./HomeView.css";
+
 interface Planet {
     [key: string]: any; // Allow additional dynamic properties
 }
@@ -19,6 +21,7 @@ export function HomeView() {
                 <ResultsContainer
                     searchResult={searchResult}
                     title="Search Results"
+                    showDetailsLink={true}
                 ></ResultsContainer>
             </div>
         </div>
