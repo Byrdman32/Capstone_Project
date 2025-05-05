@@ -17,7 +17,7 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
     const totalPages = Math.ceil(searchResult.length / itemsPerPage);
 
     useEffect(() => { // Ensure current page is always valid
-        if (currentPage < totalPages || currentPage > totalPages) {
+        if (currentPage < Math.min(1, totalPages) || currentPage > totalPages) {
             if (currentPage > totalPages) {
                 setCurrentPage(totalPages);
             } else {
@@ -48,7 +48,7 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
                         <li key={index} className="result-item">
                             <div className="image-column">
                                 <img
-                                    src={`/exoplanets/${(planet.id % 5) + 1}.png`}
+                                    src={`/exoplanets/${(planet.id % 20) + 1}.png`} // This needs to be manually updated for the number of exoplanet images
                                     alt={`Hypothetical exoplanet image`}
                                     className="planet-image"
                                 />
