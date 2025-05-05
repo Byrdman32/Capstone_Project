@@ -6,16 +6,21 @@ import { AboutView } from './pages/AboutView';
 
 function App() {
   return (
-    <Router>
-      <nav>
-        <Link to="/">Home</Link> | <Link to="/planet/:id">Individual Planet</Link> | <Link to="/about">About</Link>
-      </nav>
-      <Routes>
-        <Route path="/" element={<HomeView />} />
-        <Route path="/planet/:id" element={<IndividualPlanetView />} />
-        <Route path="/about" element={<AboutView />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <Router>
+        <header className="App-header">
+          <h1>Exoplanet Dashboard</h1>
+          <nav>
+            <Link to="/">Home</Link> | <Link to="/about">About</Link>
+          </nav>
+        </header>
+        <Routes>
+          <Route path="/" element={<HomeView />} />
+          <Route path="/planet/:id" element={<IndividualPlanetView />} />
+          <Route path="/about" element={<AboutView />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

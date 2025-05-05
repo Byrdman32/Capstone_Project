@@ -1,19 +1,14 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +17,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +35,147 @@
 
 .read-the-docs {
   color: #888;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.App-header {
+  position: fixed;
+  /* Ensures it stays at the top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Ensures it spans the full width */
+  background-color: hwb(292 0% 94%);
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  align-items: center;
+}
+
+.App-header nav {
+  margin-top: 0px;
+}
+
+.App-header nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.App-header nav a:hover {
+  text-decoration: underline;
+}
+
+
+nav {
+  margin-top: 60px;
+  /* Add margin to prevent overlap with the fixed title */
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  height: 100%;
+  width: 100%;
+  background-image: url('/background.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 200px;
+}
+
+html,
+body,
+#root {
+  background-attachment: fixed;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.result-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.image-column {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.details-column {
+  flex: 2;
+}
+
+.planet-image {
+  width: 175px;
+  /* Set the desired width */
+  height: 175px;
+  /* Set the desired height */
+  /* Optional: Adds rounded corners */
+  margin: 0px;
+  padding: 0px;
+  transform: translateY(-10px);
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  /* Vertically align items in the center */
+  margin-bottom: 1rem;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  /* Add some spacing between the two sections */
+}
+
+.search-bar-container {
+  flex: 1;
+  /* Take up half the width */
+  max-width: 50%;
+  /* Ensure it doesn't exceed half the screen */
+}
+
+.results-container {
+  flex: 1;
+  /* Take up the other half */
+  max-width: 50%;
+  /* Ensure it doesn't exceed half the screen */
+  overflow-y: auto;
+  /* Add scrolling if the results overflow */
+}
+
+.details-column {
+  flex: 2;
+  text-align: left;
+  /* Ensures the text is left-aligned */
 }

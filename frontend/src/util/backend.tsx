@@ -1,19 +1,19 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-interface MessageResponse {
+interface Response {
     data: {
         message: string;
     };
 }
 
-function BackendCall() {
+export function BackendCall() {
     const [message, setMessage] = useState<string>(''); // TypeScript enforces the type of the state variable
 
     useEffect(() => {
         axios.get('/api/stars') // Specify the expected response type
-            .then((response: MessageResponse) => {
+            .then((response: Response) => {
                 console.log(response); // Log the message to the console
-                setMessage(JSON.stringify(response.data)); // Update the message state variable with the result
+                setMessage(JSON.stringify(response.data.message)); // Update the message state variable with the result
             })
             .catch((error: unknown) => {
                 console.error(error);
@@ -27,4 +27,14 @@ function BackendCall() {
     );
 }
 
-export default BackendCall;
+export async function SystemSearchCall(searchQuery: string): Promise<any> {
+    try {
+        const response = await axios.post(
+            '/api/systems/search',
+            { request_string: searchQuery },
+        );
+        return response.data; // Properly return the response
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
