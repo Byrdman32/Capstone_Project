@@ -52,15 +52,25 @@ def get_exoplanet_data(row_range: tuple = (0, 10)) -> pd.DataFrame:
     response = rq.get(url, params=params)
     print(response.text)
 
-def fetch_and_generate_sql_file(filename="api_results.sql", length=10) -> None:
+def fetch_and_generate_sql_file(filename="api_results.sql", length=-1) -> None:
 
-    query = f"""
-        SELECT pl_name, hostname, pl_bmasse, pl_rade, pl_orbper, pl_orbsmax, pl_orbeccen,
-        sy_dist, sy_vmag, st_mass, st_rad, st_teff, st_spectype, st_age
-        FROM pscomppars
-        WHERE pl_name IS NOT NULL AND pl_bmasse IS NOT NULL AND pl_rade IS NOT NULL AND ROWNUM <= {length}
-    """
+
+    if length < 0:
+        query = f"""
+            SELECT pl_name, hostname, pl_bmasse, pl_rade, pl_orbper, pl_orbsmax, pl_orbeccen,
+            sy_dist, sy_vmag, st_mass, st_rad, st_teff, st_spectype, st_age
+            FROM pscomppars
+            WHERE pl_name IS NOT NULL AND pl_bmasse IS NOT NULL AND pl_rade IS NOT NULL
+        """
+    else:
+        query = f"""
+            SELECT pl_name, hostname, pl_bmasse, pl_rade, pl_orbper, pl_orbsmax, pl_orbeccen,
+            sy_dist, sy_vmag, st_mass, st_rad, st_teff, st_spectype, st_age
+            FROM pscomppars
+            WHERE pl_name IS NOT NULL AND pl_bmasse IS NOT NULL AND pl_rade IS NOT NULL AND ROWNUM <= {length}
+        """
     
+
     url = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
     params = {"query": query, "format": "json"}
     response = rq.get(url, params=params)
@@ -82,8 +92,8 @@ def fetch_and_generate_sql_file(filename="api_results.sql", length=10) -> None:
     system_counter = star_counter = planet_counter = 1
 
     for row in data:
-        system_name = row['hostname']
-        planet_name = row['pl_name']
+        system_name = row['hostname'].replace("'", "''")
+        planet_name = row['pl_name'].replace("'", "''")
 
         if not system_name or not planet_name:
             continue
