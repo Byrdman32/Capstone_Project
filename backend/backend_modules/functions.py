@@ -1,11 +1,6 @@
-# Authors: Duncan Truitt
-# File: functions.py
-# Description: Contains misc functions used throughout the backend
-
 import os
 import re
 import warnings
-from pathlib import Path
 
 def read_env_file(path):
     """
