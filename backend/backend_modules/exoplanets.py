@@ -52,14 +52,14 @@ def get_exoplanet_data(row_range: tuple = (0, 10)) -> pd.DataFrame:
     response = rq.get(url, params=params)
     print(response.text)
 
-def fetch_and_generate_sql_file(filename="api_results.sql"):
-    query = (
-        "SELECT pl_name, hostname, pl_bmasse, pl_rade, pl_orbper, pl_orbsmax, pl_orbeccen, "
-        "sy_dist, sy_vmag, st_mass, st_rad, st_teff, st_spectype, st_age "
-        "FROM pscomppars "
-        "WHERE pl_name IS NOT NULL AND pl_bmasse IS NOT NULL AND pl_rade IS NOT NULL AND ROWNUM <= 10 "
+def fetch_and_generate_sql_file(filename="api_results.sql", length=10) -> None:
 
-    )
+    query = f"""
+        SELECT pl_name, hostname, pl_bmasse, pl_rade, pl_orbper, pl_orbsmax, pl_orbeccen,
+        sy_dist, sy_vmag, st_mass, st_rad, st_teff, st_spectype, st_age
+        FROM pscomppars
+        WHERE pl_name IS NOT NULL AND pl_bmasse IS NOT NULL AND pl_rade IS NOT NULL AND ROWNUM <= {length}
+    """
     
     url = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
     params = {"query": query, "format": "json"}
@@ -205,6 +205,44 @@ def refresh_database(filename="api_results.sql"):
     cur.close()
     conn.close()
     
+def nuke_database(schema_file_path="backend/db/schema.sql"):
+    conn = pg.connect(
+        host=DB_CONFIG["DB_HOST"],
+        port=DB_CONFIG["DB_PORT"],
+        dbname=DB_CONFIG["DB_NAME"],
+        user=DB_CONFIG["DB_USER"],
+        password=DB_CONFIG["DB_PASSWORD"],
+    )
+
+    cur = conn.cursor()
+    cur.execute("DROP TABLE IF EXISTS systems, stars, planets, planet_orbits;")
+    conn.commit()
+
+    with open(schema_file_path, 'r', encoding='utf-8') as f:
+        sql_script = f.read()
+        cur.execute(sql_script)
+
+    cur.close()
+    conn.close()
+
+def build_database(schema_file_path="backend/db/schema.sql"):
+    conn = pg.connect(
+        host=DB_CONFIG["DB_HOST"],
+        port=DB_CONFIG["DB_PORT"],
+        dbname=DB_CONFIG["DB_NAME"],
+        user=DB_CONFIG["DB_USER"],
+        password=DB_CONFIG["DB_PASSWORD"],
+    )
+
+    cur = conn.cursor()
+
+    with open(schema_file_path, 'r', encoding='utf-8') as f:
+        sql_script = f.read()
+        cur.execute(sql_script)
+
+    conn.commit()
+    cur.close()
+    conn.close()
     
 if __name__ == "__main__":
 
