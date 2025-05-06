@@ -101,3 +101,33 @@ http://localhost:9000/swagger
 ```
 
 > Use Swagger to explore and test the API endpoints directly from the browser.
+
+## Unit Tests / Code Coverage
+
+### Run All Unit Tests
+
+To execute the test suite without collecting coverage:
+
+```bash
+PYTHONPATH=. pytest -p no:warnings -v
+```
+
+### Run Tests with Coverage
+
+To run the full test suite and collect code coverage:
+
+```bash
+PYTHONPATH=. pytest --cov=backend -p no:warnings --cov-config=.coveragerc -v
+```
+
+### Generate HTML Coverage Report
+
+To generate a visual coverage report:
+
+```bash
+PYTHONPATH=. pytest --cov=backend --cov-report=html --cov-config=.coveragerc -p no:warnings -v
+```
+
+---
+
+> All test files are located in the `backend/tests/` directory, and follow standard `pytest` conventions.
