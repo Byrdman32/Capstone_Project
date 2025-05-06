@@ -53,12 +53,13 @@ class SystemList(Resource):
 
             cur.execute(query, params if params else None)
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows]
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows]
 
 @api.route('/<int:id>')
 class SystemByID(Resource):
@@ -72,14 +73,16 @@ class SystemByID(Resource):
         try:
             cur.execute("SELECT * FROM systems WHERE id = %s;", (id,))
             row = cur.fetchone()
-            if not row:
-                api.abort(404, "System not found")
-            columns = [desc[0] for desc in cur.description]
-            return dict(zip(columns, row))
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        if not row:
+            api.abort(404, "System not found")
+
+        columns = [desc[0] for desc in cur.description]
+        return dict(zip(columns, row))
 
 @api.route('/<int:id>/planets')
 class SystemPlanets(Resource):
@@ -92,12 +95,13 @@ class SystemPlanets(Resource):
         try:
             cur.execute("SELECT * FROM planets WHERE system_id = %s;", (id,))
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows]
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows]
 
 @api.route('/<int:id>/stars')
 class SystemStars(Resource):
@@ -110,12 +114,13 @@ class SystemStars(Resource):
         try:
             cur.execute("SELECT * FROM stars WHERE system_id = %s;", (id,))
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows]
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows]
 
 @api.route('/search')
 class SystemSearch(Resource):
@@ -159,12 +164,13 @@ class SystemSearch(Resource):
 
             cur.execute(query, params if params else None)
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows]
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows]
 
 @api.route('/<int:id>/ai_description')
 class SystemAIDescription(Resource):
@@ -178,14 +184,16 @@ class SystemAIDescription(Resource):
         try:
             cur.execute("SELECT * FROM systems WHERE id = %s", (id,))
             row = cur.fetchone()
-            if not row:
-                api.abort(404, "System not found")
-            columns = [desc[0] for desc in cur.description]
-            system_data = dict(zip(columns, row))
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        if not row:
+            api.abort(404, "System not found")
+
+        columns = [desc[0] for desc in cur.description]
+        system_data = dict(zip(columns, row))
 
         try:
             description = generate_system_description(str(system_data))
