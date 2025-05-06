@@ -8,3 +8,5 @@ flask_cors
 lark
 google-generativeai
 flask_restx
+pytest
+pytest-cov
