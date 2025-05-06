@@ -30,14 +30,22 @@ export const PlanetChartView: React.FC = () => {
     { value: 'eccentricity', label: 'Eccentricity' }
   ];
 
+  const filteredPlanetsRequest = async (query: string) => {
+    if (!query) {
+      query = "ID > 0";
+    }
+    const res = await axios.post('/api/planets/search', {
+      request_string: query
+    });
+    return res
+  }
+
   const fetchFilteredPlanets = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const res = await axios.post('/api/planets/search', {
-        request_string: searchInput
-      });
+      const res = await filteredPlanetsRequest(searchInput);
       setPlanets(res.data);
     } catch (err: any) {
       const msg =
