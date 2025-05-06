@@ -145,7 +145,7 @@ def fetch_and_generate_sql_file(filename="api_results.sql", length=-1) -> None:
         f.write(planets_sql)
         f.write(orbits_sql)
 
-    print(f"✅ SQL insert file written to: {filename}")
+    print(f"✅ Database Update Successful!  {len(stars)} stars and {len(planets)} planets added.")
 
 
 def refresh_database(filename="api_results.sql"):
