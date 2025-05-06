@@ -54,12 +54,13 @@ class PlanetList(Resource):
 
             cur.execute(query, params if params else None)
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows]
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows]
 
 @api.route('/<int:id>')
 class PlanetByID(Resource):
@@ -73,14 +74,16 @@ class PlanetByID(Resource):
         try:
             cur.execute("SELECT * FROM planets WHERE id = %s;", (id,))
             row = cur.fetchone()
-            if not row:
-                api.abort(404, "Planet not found")
-            columns = [desc[0] for desc in cur.description]
-            return dict(zip(columns, row))
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        if not row:
+            api.abort(404, "Planet not found")
+
+        columns = [desc[0] for desc in cur.description]
+        return dict(zip(columns, row))
 
 @api.route('/<int:id>/stars')
 class PlanetStars(Resource):
@@ -98,12 +101,13 @@ class PlanetStars(Resource):
                 WHERE po.planet_id = %s;
             """, (id,))
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows]
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows]
 
 @api.route('/search')
 class PlanetSearch(Resource):
@@ -147,12 +151,13 @@ class PlanetSearch(Resource):
 
             cur.execute(query, params if params else None)
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows]
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows]
 
 @api.route('/<int:id>/ai_description')
 class PlanetAIDescription(Resource):
@@ -166,14 +171,16 @@ class PlanetAIDescription(Resource):
         try:
             cur.execute("SELECT * FROM planets WHERE id = %s", (id,))
             row = cur.fetchone()
-            if not row:
-                api.abort(404, "Planet not found")
-            columns = [desc[0] for desc in cur.description]
-            planet_data = dict(zip(columns, row))
         except Exception as e:
             api.abort(500, str(e))
         finally:
             cur.close()
+
+        if not row:
+            api.abort(404, "Planet not found")
+
+        columns = [desc[0] for desc in cur.description]
+        planet_data = dict(zip(columns, row))
 
         try:
             description = generate_planet_description(str(planet_data))

@@ -23,8 +23,8 @@ ai_response_model = models['ai_response_model']
 class StarList(Resource):
     @api.doc(
         params={
-            'limit': 'Maximum number of planets to return (optional)',
-            'offset': 'Number of planets to skip before starting to return results (optional)'
+            'limit': 'Maximum number of stars to return (optional)',
+            'offset': 'Number of stars to skip before starting to return results (optional)'
         }
     )
     @api.marshal_list_with(star_model, code=200, description='List of all stars', mask=None)
@@ -53,12 +53,13 @@ class StarList(Resource):
 
             cur.execute(query, params if params else None)
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows], 200
         except Exception as e:
-            return {'error': str(e)}, 500
+            api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows], 200
 
 @api.route('/<int:id>')
 class StarByID(Resource):
@@ -72,14 +73,16 @@ class StarByID(Resource):
         try:
             cur.execute("SELECT * FROM stars WHERE id = %s;", (id,))
             row = cur.fetchone()
-            if not row:
-                return {'error': 'Star not found'}, 404
-            columns = [desc[0] for desc in cur.description]
-            return dict(zip(columns, row)), 200
         except Exception as e:
-            return {'error': str(e)}, 500
+            api.abort(500, str(e))
         finally:
             cur.close()
+
+        if not row:
+            api.abort(404, "Star not found")
+
+        columns = [desc[0] for desc in cur.description]
+        return dict(zip(columns, row)), 200
 
 @api.route('/<int:id>/planets')
 class StarPlanets(Resource):
@@ -97,19 +100,20 @@ class StarPlanets(Resource):
                 WHERE o.star_id = %s;
             """, (id,))
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows], 200
         except Exception as e:
-            return {'error': str(e)}, 500
+            api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows], 200
 
 @api.route('/search')
 class StarSearch(Resource):
     @api.doc(
         params={
-            'limit': 'Maximum number of planets to return (optional)',
-            'offset': 'Number of planets to skip before starting to return results (optional)'
+            'limit': 'Maximum number of stars to return (optional)',
+            'offset': 'Number of stars to skip before starting to return results (optional)'
         }
     )
     @api.expect(search_model)
@@ -117,12 +121,12 @@ class StarSearch(Resource):
     @api.response(400, 'Invalid expression')
     @api.response(500, 'Internal Server Error')
     def post(self):
-        """Search for stars using a validated SQL WHERE clause."""
+        """Search for stars using a validated SQL WHERE clause, with optional limit and offset."""
         body = request.get_json()
         st = body.get('request_string', '')
 
         if not valid_expression(st):
-            return {'error': 'Invalid expression'}, 400
+            api.abort(400, "Invalid expression")
 
         conn = get_db()
         cur = conn.cursor()
@@ -146,12 +150,13 @@ class StarSearch(Resource):
 
             cur.execute(query, params if params else None)
             rows = cur.fetchall()
-            columns = [desc[0] for desc in cur.description]
-            return [dict(zip(columns, row)) for row in rows], 200
         except Exception as e:
-            return {'error': str(e)}, 500
+            api.abort(500, str(e))
         finally:
             cur.close()
+
+        columns = [desc[0] for desc in cur.description]
+        return [dict(zip(columns, row)) for row in rows]
 
 @api.route('/<int:id>/ai_description')
 class StarAIDescription(Resource):
@@ -165,17 +170,19 @@ class StarAIDescription(Resource):
         try:
             cur.execute("SELECT * FROM stars WHERE id = %s", (id,))
             row = cur.fetchone()
-            if not row:
-                return {'error': 'Star not found'}, 404
-            columns = [desc[0] for desc in cur.description]
-            star_data = dict(zip(columns, row))
         except Exception as e:
-            return {'error': str(e)}, 500
+            api.abort(500, str(e))
         finally:
             cur.close()
+
+        if not row:
+            api.abort(404, "Star not found")
+        
+        columns = [desc[0] for desc in cur.description]
+        star_data = dict(zip(columns, row))
 
         try:
             description = generate_star_description(str(star_data))
             return {'description': description}, 200
         except Exception as e:
-            return {'error': f"AI generation failed: {str(e)}"}, 500
+            api.abort(500, f"AI generation failed: {str(e)}")
