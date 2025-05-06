@@ -33,3 +33,41 @@
     gap: 20px;
     /* Add some spacing between the two sections */
 }
+
+.next-planet-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #b420d1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.next-planet-button:hover {
+    background-color: #b420d1;
+}
+
+.previous-planet-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #b420d1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.previous-planet-button:hover {
+    background-color: #b420d1;
+}
