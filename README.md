@@ -1,112 +1,121 @@
-# Development Workflow
+# Project Overview
 
-Follow the steps below to set up your environment, build the front-end, and run the back-end server with Swagger UI support.
+This is a full-stack web application featuring a **React** front-end and a **Flask** back-end API. It includes:
+
+* **Interactive API documentation and testing** via Swagger UI
+* **React-based user interface** built with modern JavaScript tooling
+* **Dev Container support** for seamless, portable development environments using Docker
+* **PyTest-based testing suite** with optional code coverage reporting
 
 ---
 
-## API Token Setup (optional)
+# Setup Instructions
 
-1. Retrieve the API token from the Discord server.
-2. Save the token to:
+### Prerequisites
 
-   ```
-   backend/backend_modules/tokens/api_token
-   ```
+* [Docker](https://www.docker.com/)
+* [Visual Studio Code](https://code.visualstudio.com/)
+* [Dev Containers VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+---
+
+# Development Workflow
+
+Follow these steps to set up, build, and run both front-end and back-end services.
 
 ---
 
 ## Dev Container Usage
 
-You can either use **VS Code Dev Container View** or run an **interactive terminal** for development.
+### Option 1: VS Code Dev Container (Recommended)
 
-### Option 1: Open in VS Code (Recommended)
-
-1. Press `Ctrl + Shift + P`
-2. Select: **Dev Containers: Rebuild and Reopen in Container**
+1. Open VS Code
+2. Press `Ctrl + Shift + P`
+3. Select: **Dev Containers: Rebuild and Reopen in Container**
 
 ### Option 2: Interactive Terminal
 
-1. From the project root, run:
+From the project root:
 
-   ```
-   ./enter_dev_container.sh        # For Unix
-   ./enter_dev_container.bat       # For Windows
-   ```
+```bash
+./enter_dev_container.sh        # Unix
+./enter_dev_container.bat       # Windows
+```
 
-2. This will:
+This script:
 
-   * Build the container
-   * Forward required ports
-   * Install all dependencies
-   * Automatically clean up on exit
+* Builds the container
+* Forwards required ports
+* Installs dependencies
+* Cleans up automatically on exit
 
 ---
 
-## Building the Front-End
+## Building the Front-End (React)
 
 1. Navigate to the front-end directory:
 
-   ```
+   ```bash
    cd frontend
    ```
 
-2. Install dependencies (re-run if `package.json` changes):
+2. Install dependencies:
 
-   ```
+   ```bash
    npm install
    ```
 
-3. Build the front-end:
+3. Build the React application:
 
-   ```
+   ```bash
    npm run build
    ```
 
+> Re-run `npm install` if `package.json` changes.
+
 ---
 
-## Running the Back-End
+## Running the Back-End (Flask)
 
 ### Option 1: Manual Start
 
-1. Navigate to the back-end:
-
-   ```
-   cd backend
-   ```
-
-2. Run the server:
-
-   ```
-   python3 -m backend.main
-   ```
-
-### Option 2: Automated Script
-
-From the project root:
-
+```bash
+cd backend
+python3 -m backend.main
 ```
+
+### Option 2: Unified Script
+
+```bash
 ./start_server.sh
 ```
 
-> This will build the front-end and start the back-end server in one step.
+This script:
+
+* Builds the front-end
+* Launches the back-end server
 
 ---
 
 ## Swagger UI
 
-Once the server is running, access the auto-generated Swagger documentation at:
+Once the server is running, visit:
 
 ```
 http://localhost:9000/swagger
 ```
 
-> Use Swagger to explore and test the API endpoints directly from the browser.
+Use Swagger UI to:
 
-## Unit Tests / Code Coverage
+* Explore API endpoints
+* Test input/output formats
+* View validation and error responses
+
+---
+
+## Unit Tests & Code Coverage
 
 ### Run All Unit Tests
-
-To execute the test suite without collecting coverage:
 
 ```bash
 PYTHONPATH=. pytest -p no:warnings -v
@@ -114,20 +123,26 @@ PYTHONPATH=. pytest -p no:warnings -v
 
 ### Run Tests with Coverage
 
-To run the full test suite and collect code coverage:
-
 ```bash
 PYTHONPATH=. pytest --cov=backend -p no:warnings --cov-config=.coveragerc -v
 ```
 
 ### Generate HTML Coverage Report
 
-To generate a visual coverage report:
-
 ```bash
 PYTHONPATH=. pytest --cov=backend --cov-report=html --cov-config=.coveragerc -p no:warnings -v
 ```
 
+> Tests are located in `backend/tests/` and follow `pytest` standards.
+
 ---
 
-> All test files are located in the `backend/tests/` directory, and follow standard `pytest` conventions.
+# Team Contributions
+
+This project was made possible by the collaborative efforts of the following team members:
+
+* **Viktor Butkovich** ([@Viktor-Butkovich](https://github.com/Viktor-Butkovich)) - *Front-end development*
+* **Eli Byrd** ([@byrdman32](https://github.com/byrdman32)) - *Back-end API Development*
+* **Kevin Mccole** ([@Stickydarp](https://github.com/Stickydarp)) - *Testing and AI integration*
+* **Duncan Truitt** ([@copper-head](https://github.com/copper-head)) - *Backend API/Database development*
+* **Melesio Albavera** ([@me11203sci](https://github.com/me11203sci))
