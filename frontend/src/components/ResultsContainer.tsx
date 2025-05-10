@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
+import { toCapitalCase, removeUnderscores } from "../util/formatting";
 
 import "./ResultsContainer.css";
 
@@ -68,7 +69,7 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ searchResult
                                     {Object.entries(planet).map(([key, value]) => (
                                         key !== "image" && ( // Exclude the image key from the list
                                             <li key={key}>
-                                                <strong>{key}:</strong> {String(value)}
+                                                <strong>{toCapitalCase(removeUnderscores(key))}:</strong> {removeUnderscores(String(value))}
                                             </li>
                                         )
                                     ))}

@@ -38,7 +38,7 @@ export const IndividualResultContainer: React.FC<ResultsContainerProps> = ({ sea
                                 {Object.entries(searchResult[0]).map(([key, value]) => (
                                     key !== "image" && ( // Exclude the image key from the list
                                         <li key={key}>
-                                            <strong>{toCapitalCase(removeUnderscores(key))}:</strong> {String(removeUnderscores(String(value)))}
+                                            <strong>{toCapitalCase(removeUnderscores(key))}:</strong> {removeUnderscores(String(value))}
                                         </li>
                                     )
                                 ))}
